@@ -1,0 +1,29 @@
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+api/db.sqlite3
+api/.localstorage/
+api/staticfiles/
+.pytest_cache/
+
+# Node
+node_modules/
+web/dist/
+
+# Environment
+.env
+.env.local
+web/.env.local
+!web/.env.local.example
+
+# Editors / OS
+.DS_Store
+.vscode/*
+!.vscode/settings.json
+.idea/
+
+# Generated sample data
+sample-drawings.pdf
+web/tsconfig.tsbuildinfo

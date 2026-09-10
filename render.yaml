@@ -1,0 +1,37 @@
+# Render blueprint: one web service serving both the API and the built SPA.
+#
+# A single service is deliberate. Splitting the frontend onto a Render Static
+# Site would put it on a different origin from the API, which would force the
+# refresh cookie to SameSite=None and drag CORS into the login path. One
+# origin keeps it SameSite=Strict.
+
+databases:
+  - name: drawing-annotator-db
+    plan: free
+    region: oregon
+
+services:
+  - type: web
+    name: drawing-annotator
+    runtime: python
+    plan: free
+    region: oregon
+    buildCommand: ./scripts/render-build.sh
+    startCommand: cd api && gunicorn config.wsgi:application --bind 0.0.0.0:$PORT --workers 2 --threads 4 --timeout 120
+    healthCheckPath: /api/health/
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.7
+      - key: DJANGO_SECRET_KEY
+        generateValue: true
+      - key: DJANGO_DEBUG
+        value: "0"
+      - key: DATABASE_URL
+        fromDatabase:
+          name: drawing-annotator-db
+          property: connectionString
+      - key: GOOGLE_CLIENT_ID
+        sync: false
+      # Read at build time by Vite and baked into the bundle.
+      - key: VITE_GOOGLE_CLIENT_ID
+        sync: false

@@ -1,0 +1,10 @@
+Django==5.2.6
+djangorestframework==3.15.2
+django-cors-headers==4.4.0
+psycopg[binary]==3.2.3
+dj-database-url==2.2.0
+google-auth==2.35.0
+requests==2.32.3
+PyJWT==2.9.0
+gunicorn==23.0.0
+whitenoise==6.7.0
