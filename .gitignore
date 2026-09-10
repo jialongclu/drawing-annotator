@@ -16,7 +16,7 @@ web/dist/
 .env
 .env.local
 web/.env.local
-!web/.env.local.example
+web/.env.local.example
 
 # Editors / OS
 .DS_Store
