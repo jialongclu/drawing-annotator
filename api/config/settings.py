@@ -246,6 +246,13 @@ CORS_ALLOWED_ORIGIN_REGEXES = (
     [r"^http://(localhost|127\.0\.0\.1)(:\d+)?$"] if DEBUG else []
 )
 
+# Django's default (`same-origin`) severs window.opener the moment this page
+# opens a cross-origin popup — which is exactly how Google's "Sign in with
+# Google" button delivers its credential back. Invisible locally, where Vite
+# serves index.html and never sends this header at all; only shows up once
+# WhiteNoise starts serving the SPA itself, here and on Render.
+SECURE_CROSS_ORIGIN_OPENER_POLICY = "same-origin-allow-popups"
+
 if not DEBUG:
     # Render terminates TLS at its edge and forwards the original scheme.
     SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
